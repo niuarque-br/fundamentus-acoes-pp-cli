@@ -1,0 +1,64 @@
+{
+  "api_name": "fundamentus-acoes",
+  "base_url": "https://b279i8mvg0nr9p9cjp1exd1d.152.67.46.88.sslip.io",
+  "description": "Ações da B3 via Fundamentus — dados estruturados via Crawl4AI",
+  "mcp_ready": "full",
+  "http_transport": "standard",
+  "auth": {
+    "type": "none"
+  },
+  "required_headers": [],
+  "tools": [
+    {
+      "name": "crawl_listar-acoes",
+      "description": "Obtém a tabela completa de ações com todos os indicadores fundamentalistas via Crawl4AI. Required: urls. Optional: priority (default: 10). Returns array of CrawlListarAcoesItem.",
+      "method": "POST",
+      "path": "/crawl",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "priority",
+          "type": "int",
+          "location": "body",
+          "description": "Priority"
+        },
+        {
+          "name": "urls",
+          "type": "string_csv_array",
+          "location": "body",
+          "description": "Urls",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "crawl-detalhes-acao_detalhes-acao",
+      "description": "Obtém os detalhes completos de uma ação (informações financeiras, balanços, indicadores). Required: papel, urls. Optional: priority (default: 10). Returns array of CrawlDetalhesAcaoDetalhesAcaoItem.",
+      "method": "POST",
+      "path": "/crawl-detalhes-acao",
+      "no_auth": true,
+      "params": [
+        {
+          "name": "papel",
+          "type": "string",
+          "location": "query",
+          "description": "Código da ação (ex: PETR4, VALE3, ITUB4)",
+          "required": true
+        },
+        {
+          "name": "priority",
+          "type": "int",
+          "location": "body",
+          "description": "Priority"
+        },
+        {
+          "name": "urls",
+          "type": "string_csv_array",
+          "location": "body",
+          "description": "URL do detalhe (gerado automaticamente pelo papel)",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

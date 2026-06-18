@@ -1,0 +1,51 @@
+version: 2
+project_name: fundamentus-acoes-pp-cli
+changelog:
+  disable: true
+builds:
+  - id: fundamentus-acoes-pp-cli
+    main: ./cmd/fundamentus-acoes-pp-cli
+    binary: fundamentus-acoes-pp-cli
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X fundamentus-acoes-pp-cli/internal/cli.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+  - id: fundamentus-acoes-pp-mcp
+    main: ./cmd/fundamentus-acoes-pp-mcp
+    binary: fundamentus-acoes-pp-mcp
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+checksum:
+  name_template: checksums.txt
+brews:
+  - name: fundamentus-acoes-pp-cli
+    repository:
+      owner: 
+      name: homebrew-tap
+    homepage: "https://github.com//fundamentus-acoes-pp-cli"
+    description: "Ações da B3 via Fundamentus — dados estruturados via Crawl4AI"
+    install: |
+      bin.install "fundamentus-acoes-pp-cli"
+      bin.install "fundamentus-acoes-pp-mcp"

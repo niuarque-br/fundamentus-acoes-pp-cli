@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-06-18T13:46:44.087356776Z",
+  "printing_press_version": "4.24.0",
+  "api_name": "fundamentus-acoes",
+  "display_name": "Fundamentus Ações",
+  "cli_name": "fundamentus-acoes-pp-cli",
+  "spec_path": "spec-fundamentus-acoes.yaml",
+  "spec_format": "openapi3",
+  "spec_checksum": "sha256:b28526aafdc4049e2d03e5515e377367db348d068c210e35ba180017c837f813",
+  "run_id": "20260618-134644",
+  "description": "Ações da B3 via Fundamentus — dados estruturados via Crawl4AI",
+  "mcp_binary": "fundamentus-acoes-pp-mcp",
+  "mcp_tool_count": 2,
+  "mcp_public_tool_count": 2,
+  "mcp_ready": "full",
+  "api_version": "1.0.0",
+  "auth_type": "none"
+}

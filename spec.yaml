@@ -1,0 +1,125 @@
+openapi: "3.0.3"
+info:
+  title: Fundamentus Ações
+  description: 'Ações da B3 via Fundamentus — dados estruturados via Crawl4AI'
+  version: "1.0.0"
+servers:
+  - url: https://b279i8mvg0nr9p9cjp1exd1d.152.67.46.88.sslip.io
+    description: Crawl4AI Scraper
+paths:
+  /crawl:
+    post:
+      operationId: listarAcoes
+      summary: Listar todas as ações
+      description: Obtém a tabela completa de ações com todos os indicadores fundamentalistas via Crawl4AI
+      tags:
+        - Ações
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - urls
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - "https://www.fundamentus.com.br/resultado.php"
+                priority:
+                  type: integer
+                  default: 10
+      responses:
+        "200":
+          description: Tabela de ações extraída
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tables:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              headers:
+                                type: array
+                                items:
+                                  type: string
+                              rows:
+                                type: array
+                                items:
+                                  type: array
+                                  items:
+                                    type: string
+                        markdown:
+                          type: object
+                          properties:
+                            raw_markdown:
+                              type: string
+  /crawl-detalhes-acao:
+    post:
+      operationId: detalhesAcao
+      summary: Detalhes de uma ação
+      description: Obtém os detalhes completos de uma ação (informações financeiras, balanços, indicadores)
+      x-route-override: /crawl
+      tags:
+        - Ações
+      parameters:
+        - name: papel
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: "^[A-Z0-9]{4,6}$"
+          description: 'Código da ação (ex: PETR4, VALE3, ITUB4)'
+          example: PETR4
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - urls
+              properties:
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  description: 'URL do detalhe (gerado automaticamente pelo papel)'
+                priority:
+                  type: integer
+                  default: 10
+      responses:
+        "200":
+          description: Detalhes da ação
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        markdown:
+                          type: object
+                          properties:
+                            raw_markdown:
+                              type: string
+                        status_code:
+                          type: integer
